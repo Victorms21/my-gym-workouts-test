@@ -43,6 +43,14 @@ describe('HomeComponent', () => {
     expect(navLinks[3].textContent?.trim()).toContain('MyAccount');
   });
 
+  it('should render navigation items as buttons for accessibility', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const navLinks = compiled.querySelectorAll('.nav-link');
+    navLinks.forEach((link) => {
+      expect(link.tagName.toLowerCase()).toBe('button');
+    });
+  });
+
   it('should render banner section with image', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.banner-section')).toBeTruthy();
@@ -67,6 +75,12 @@ describe('HomeComponent', () => {
   });
 
   it('should have routines as default active nav item', () => {
+    expect(component.activeNavItem()).toBe('routines');
+  });
+
+  it('should set routines as active when start training is clicked', () => {
+    component.setActiveNavItem('exercises');
+    component.onStartTraining();
     expect(component.activeNavItem()).toBe('routines');
   });
 });

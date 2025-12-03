@@ -4,37 +4,45 @@
       <div class="logo">
         <span class="logo-text">My Gym Workouts</span>
       </div>
-      <nav class="nav-menu">
-        <a
+      <nav class="nav-menu" role="navigation" aria-label="Menú principal">
+        <button
+          type="button"
           class="nav-link"
           [class.active]="activeNavItem() === 'routines'"
           (click)="setActiveNavItem('routines')"
+          [attr.aria-current]="activeNavItem() === 'routines' ? 'page' : null"
         >
           ROUTINES
-        </a>
-        <a
+        </button>
+        <button
+          type="button"
           class="nav-link"
           [class.active]="activeNavItem() === 'create'"
           (click)="setActiveNavItem('create')"
+          [attr.aria-current]="activeNavItem() === 'create' ? 'page' : null"
         >
           CREATE NEW ROUTINES
-        </a>
-        <a
+        </button>
+        <button
+          type="button"
           class="nav-link"
           [class.active]="activeNavItem() === 'exercises'"
           (click)="setActiveNavItem('exercises')"
+          [attr.aria-current]="activeNavItem() === 'exercises' ? 'page' : null"
         >
           EXERCISES
-        </a>
-        <a
+        </button>
+        <button
+          type="button"
           class="nav-link nav-link--highlight"
           [class.active]="activeNavItem() === 'account'"
           (click)="setActiveNavItem('account')"
+          [attr.aria-current]="activeNavItem() === 'account' ? 'page' : null"
         >
           MyAccount
-        </a>
+        </button>
       </nav>
-      <button class="logout-button" (click)="onLogout()" aria-label="Cerrar sesión">
+      <button class="logout-button" type="button" (click)="onLogout()" aria-label="Cerrar sesión">
         ✕
       </button>
     </div>
@@ -49,7 +57,7 @@
           loading="lazy"
         />
       </div>
-      <button class="banner-cta">START TRAINING</button>
+      <button type="button" class="banner-cta" (click)="onStartTraining()">START TRAINING</button>
     </section>
   </main>
 

@@ -18,6 +18,10 @@ export class HomeComponent {
     this.activeNavItem.set(item);
   }
 
+  onStartTraining(): void {
+    this.setActiveNavItem('routines');
+  }
+
   onLogout(): void {
     this.authService.logout();
   }

@@ -65,9 +65,11 @@ $header-height: 70px;
   background-color: $color-black;
   color: $color-white;
   padding: 10px 20px;
+  border: none;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
+  font-family: inherit;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
@@ -75,6 +77,11 @@ $header-height: 70px;
 
   &:hover {
     background-color: $color-highlight;
+  }
+
+  &:focus {
+    outline: 2px solid $color-highlight;
+    outline-offset: 2px;
   }
 
   &.active {
