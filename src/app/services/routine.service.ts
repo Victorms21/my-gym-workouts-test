@@ -127,6 +127,7 @@ export class RoutineService {
    */
   clearRoutines(): void {
     this.routinesSignal.set([]);
+    this.loadingSignal.set(false);
     this.errorSignal.set(null);
   }
 }

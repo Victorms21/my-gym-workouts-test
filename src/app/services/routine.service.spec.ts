@@ -229,6 +229,7 @@ describe('RoutineService', () => {
       service.clearRoutines();
 
       expect(service.routines().length).toBe(0);
+      expect(service.loading()).toBeFalse();
       expect(service.error()).toBeNull();
     });
   });
