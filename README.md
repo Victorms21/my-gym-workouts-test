@@ -74,7 +74,7 @@ src/
 │   ├── guards/           # Guards de autenticación
 │   ├── interceptors/     # Interceptores HTTP
 │   ├── models/           # Modelos e interfaces
-│   └── services/         # Servicios (AuthService, RoutineService, ExerciseService)
+│   └── services/         # Servicios (AuthService, RoutineService, ExerciseService, MuscleGroupService)
 ├── environments/
 │   ├── environment.ts    # Desarrollo
 │   └── environment.prod.ts # Producción
@@ -211,6 +211,58 @@ Authorization: Bearer <token>
   "id": 1,
   "name": "Sentadilla",
   "muscle_group_id": 3,
+  "created_at": "2025-12-04T19:57:00.000000Z",
+  "updated_at": "2025-12-04T19:57:00.000000Z"
+}
+```
+
+### Grupos Musculares
+
+Todos los endpoints de grupos musculares requieren autenticación con Bearer token.
+
+| Método | Endpoint | Descripción | Autenticación |
+|--------|----------|-------------|---------------|
+| GET | `/api/muscleGroups` | Obtener todos los grupos musculares | Bearer Token |
+| GET | `/api/muscleGroups/:id` | Obtener un grupo muscular específico | Bearer Token |
+
+#### GET /api/muscleGroups
+
+**Headers:**
+```
+Authorization: Bearer <token>
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "Pecho",
+    "created_at": "2025-12-04T19:57:00.000000Z",
+    "updated_at": "2025-12-04T19:57:00.000000Z"
+  },
+  {
+    "id": 2,
+    "name": "Espalda",
+    "created_at": "2025-12-04T19:57:00.000000Z",
+    "updated_at": "2025-12-04T19:57:00.000000Z"
+  },
+  {
+    "id": 3,
+    "name": "Piernas",
+    "created_at": "2025-12-04T19:57:00.000000Z",
+    "updated_at": "2025-12-04T19:57:00.000000Z"
+  }
+]
+```
+
+#### GET /api/muscleGroups/:id
+
+**Response:**
+```json
+{
+  "id": 1,
+  "name": "Pecho",
   "created_at": "2025-12-04T19:57:00.000000Z",
   "updated_at": "2025-12-04T19:57:00.000000Z"
 }
