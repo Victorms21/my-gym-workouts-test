@@ -1,0 +1,330 @@
+// DISEÑO 2: Fitness Modern - Dinámico con gradientes y efectos
+.routines-container.design-2 {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: white;
+
+    .header-content {
+      .header-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        animation: bounce 2s infinite;
+      }
+
+      .page-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .page-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .loading-state,
+  .error-state,
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: white;
+
+    .loading-pulse {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-illustration {
+      position: relative;
+      margin-bottom: 2rem;
+
+      .illustration-circle {
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        margin: 0 auto;
+      }
+
+      .illustration-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .retry-button,
+    .cta-button {
+      padding: 1rem 2.5rem;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .routines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .routine-card {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .card-content {
+      padding: 1.5rem;
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .routine-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 0.4rem 1rem;
+          border-radius: 50px;
+          font-size: 0.85rem;
+          font-weight: 600;
+
+          .badge-icon {
+            font-size: 1rem;
+          }
+        }
+
+        .delete-btn {
+          background: #ff4757;
+          color: white;
+          border: none;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 1.2rem;
+          line-height: 1;
+          transition: all 0.2s;
+
+          &:hover {
+            background: #ff3838;
+            transform: scale(1.1);
+          }
+        }
+      }
+
+      .routine-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+      }
+
+      .metrics-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+
+        .metric {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          .metric-icon {
+            font-size: 1.5rem;
+          }
+
+          .metric-info {
+            display: flex;
+            flex-direction: column;
+
+            .metric-value {
+              font-size: 1.3rem;
+              font-weight: 700;
+              color: #667eea;
+            }
+
+            .metric-label {
+              font-size: 0.75rem;
+              color: #95a5a6;
+              text-transform: uppercase;
+            }
+          }
+        }
+      }
+
+      .exercises-list {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 1rem;
+
+        .list-header {
+          font-size: 0.9rem;
+          color: #7f8c8d;
+          font-weight: 600;
+          margin-bottom: 0.75rem;
+        }
+
+        .exercise-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.5rem 0;
+          color: #2c3e50;
+
+          .exercise-bullet {
+            color: #667eea;
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+
+          .exercise-name {
+            flex: 1;
+            font-weight: 500;
+          }
+
+          .exercise-sets {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-weight: 600;
+          }
+
+          &.more {
+            justify-content: center;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      border-top: 1px solid #ecf0f1;
+
+      .action-btn {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        transition: all 0.2s;
+
+        .btn-icon {
+          font-size: 1rem;
+        }
+
+        &--primary {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+
+        &--secondary {
+          color: #667eea;
+
+          &:hover {
+            background: #f8f9fa;
+          }
+        }
+
+        & + & {
+          border-left: 1px solid #ecf0f1;
+        }
+      }
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}

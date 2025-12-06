@@ -1,0 +1,176 @@
+<!-- DISEÑO 3: Dashboard Pro - Estilo profesional con métricas destacadas -->
+<div class="routines-container design-3">
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">Filtros</h2>
+      </div>
+      <div class="sidebar-content">
+        <div class="filter-section">
+          <h3 class="filter-title">Estado</h3>
+          <label class="filter-option">
+            <input type="checkbox" checked />
+            <span>Activas</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" />
+            <span>Archivadas</span>
+          </label>
+        </div>
+        <div class="filter-section">
+          <h3 class="filter-title">Grupos Musculares</h3>
+          <label class="filter-option">
+            <input type="checkbox" />
+            <span>Pecho</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" />
+            <span>Espalda</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" />
+            <span>Piernas</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div class="header-top">
+          <div>
+            <h1 class="page-title">Panel de Rutinas</h1>
+            <p class="page-breadcrumb">Inicio / Rutinas</p>
+          </div>
+          <button class="btn-create">+ Nueva Rutina</button>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--purple">📊</div>
+            <div class="stat-info">
+              <span class="stat-value">{{ routines().length }}</span>
+              <span class="stat-label">Total Rutinas</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--blue">⚡</div>
+            <div class="stat-info">
+              <span class="stat-value">{{ routines().length }}</span>
+              <span class="stat-label">Activas</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--green">✓</div>
+            <div class="stat-info">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Completadas</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--orange">🔥</div>
+            <div class="stat-info">
+              <span class="stat-value">--</span>
+              <span class="stat-label">Racha Actual</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      @if (loading()) {
+        <div class="loading-state">
+          <div class="loader"></div>
+          <p>Cargando rutinas...</p>
+        </div>
+      }
+
+      @if (error()) {
+        <div class="error-state">
+          <div class="error-icon">❌</div>
+          <h3>Error al cargar</h3>
+          <p>{{ error() }}</p>
+          <button class="btn-retry" (click)="loadRoutines()">Reintentar</button>
+        </div>
+      }
+
+      @if (!loading() && !error() && routines().length === 0) {
+        <div class="empty-state">
+          <div class="empty-graphic">
+            <div class="empty-circle"></div>
+            <div class="empty-icon">📝</div>
+          </div>
+          <h2>Sin rutinas registradas</h2>
+          <p>Empieza creando tu primera rutina de entrenamiento</p>
+          <button class="btn-empty-action">Crear Primera Rutina</button>
+        </div>
+      }
+
+      @if (!loading() && !error() && routines().length > 0) {
+        <div class="routines-grid">
+          @for (routine of routines(); track routine.id) {
+            <article class="routine-card">
+              <div class="card-header">
+                <div class="header-left">
+                  <span class="routine-id">#{{ routine.id }}</span>
+                  <h3 class="routine-name">{{ routine.name }}</h3>
+                </div>
+                <div class="header-actions">
+                  <button class="icon-btn" title="Editar">✏️</button>
+                  <button class="icon-btn icon-btn--danger" (click)="onDeleteRoutine(routine)" title="Eliminar">
+                    🗑️
+                  </button>
+                </div>
+              </div>
+
+              <div class="card-metrics">
+                <div class="metric-box">
+                  <div class="metric-header">
+                    <span class="metric-icon">💪</span>
+                    <span class="metric-name">Ejercicios</span>
+                  </div>
+                  <div class="metric-value">{{ getTotalExercises(routine) }}</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-header">
+                    <span class="metric-icon">🔢</span>
+                    <span class="metric-name">Series</span>
+                  </div>
+                  <div class="metric-value">{{ getTotalSets(routine) }}</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-header">
+                    <span class="metric-icon">🎯</span>
+                    <span class="metric-name">Grupos</span>
+                  </div>
+                  <div class="metric-value">{{ getUniqueMusleGroups(routine) }}</div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="section-title">Lista de Ejercicios</div>
+                <div class="exercises-table">
+                  @for (exercise of routine.exercises.slice(0, 4); track exercise.id) {
+                    <div class="table-row">
+                      <span class="row-name">{{ exercise.name }}</span>
+                      <span class="row-badge">{{ exercise.pivot.sets }} × {{ exercise.pivot.reps }}</span>
+                    </div>
+                  }
+                  @if (routine.exercises.length > 4) {
+                    <div class="table-row table-row--more">
+                      <span class="more-text">+ {{ routine.exercises.length - 4 }} ejercicios adicionales</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <button class="footer-btn footer-btn--outline">Ver Completa</button>
+                <button class="footer-btn footer-btn--solid">Iniciar Entrenamiento</button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div>

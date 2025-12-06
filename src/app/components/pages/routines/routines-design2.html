@@ -1,0 +1,112 @@
+<!-- DISEÑO 2: Fitness Modern - Dinámico con gradientes -->
+<div class="routines-container design-2">
+  <header class="page-header">
+    <div class="header-content">
+      <div class="header-icon">💪</div>
+      <h1 class="page-title">Mis Rutinas de Entrenamiento</h1>
+      <p class="page-subtitle">{{ routines().length }} rutina(s) disponible(s)</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="loading-pulse"></div>
+      <p>Cargando tus rutinas...</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <p>{{ error() }}</p>
+      <button class="retry-button" (click)="loadRoutines()">Volver a intentar</button>
+    </div>
+  }
+
+  @if (!loading() && !error() && routines().length === 0) {
+    <div class="empty-state">
+      <div class="empty-illustration">
+        <div class="illustration-circle"></div>
+        <div class="illustration-icon">🏋️</div>
+      </div>
+      <h2>¡Comienza tu viaje fitness!</h2>
+      <p>Crea tu primera rutina y empieza a alcanzar tus objetivos</p>
+      <button class="cta-button">Crear Rutina</button>
+    </div>
+  }
+
+  @if (!loading() && !error() && routines().length > 0) {
+    <div class="routines-grid">
+      @for (routine of routines(); track routine.id) {
+        <article class="routine-card">
+          <div class="card-gradient"></div>
+          
+          <div class="card-content">
+            <div class="card-header">
+              <div class="routine-badge">
+                <span class="badge-icon">⚡</span>
+                <span class="badge-text">Activa</span>
+              </div>
+              <button class="delete-btn" (click)="onDeleteRoutine(routine)" title="Eliminar">
+                ✕
+              </button>
+            </div>
+
+            <h3 class="routine-title">{{ routine.name }}</h3>
+
+            <div class="metrics-row">
+              <div class="metric">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-info">
+                  <span class="metric-value">{{ getTotalExercises(routine) }}</span>
+                  <span class="metric-label">ejercicios</span>
+                </div>
+              </div>
+              <div class="metric">
+                <div class="metric-icon">🔥</div>
+                <div class="metric-info">
+                  <span class="metric-value">{{ getTotalSets(routine) }}</span>
+                  <span class="metric-label">series</span>
+                </div>
+              </div>
+              <div class="metric">
+                <div class="metric-icon">💪</div>
+                <div class="metric-info">
+                  <span class="metric-value">{{ getUniqueMusleGroups(routine) }}</span>
+                  <span class="metric-label">grupos</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="exercises-list">
+              <div class="list-header">Ejercicios incluidos:</div>
+              @for (exercise of routine.exercises.slice(0, 3); track exercise.id) {
+                <div class="exercise-row">
+                  <span class="exercise-bullet">•</span>
+                  <span class="exercise-name">{{ exercise.name }}</span>
+                  <span class="exercise-sets">{{ exercise.pivot.sets }}×{{ exercise.pivot.reps }}</span>
+                </div>
+              }
+              @if (routine.exercises.length > 3) {
+                <div class="exercise-row more">
+                  <span class="more-text">Y {{ routine.exercises.length - 3 }} ejercicios más...</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="action-btn action-btn--primary">
+              <span class="btn-icon">▶️</span>
+              <span>Iniciar</span>
+            </button>
+            <button class="action-btn action-btn--secondary">
+              <span class="btn-icon">👁️</span>
+              <span>Ver más</span>
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>
