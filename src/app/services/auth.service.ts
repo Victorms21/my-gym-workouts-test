@@ -75,8 +75,8 @@ export class AuthService {
     this.removeToken();
     this.removeUser();
     this.currentUserSignal.set(null);
-    this.router.navigate(['/login']).then(() => {
-      // Reset the flag after navigation completes
+    this.router.navigate(['/login']).finally(() => {
+      // Always reset the flag, even if navigation fails
       this.isLoggingOut = false;
     });
   }

@@ -8,8 +8,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authService.getToken();
 
   // Skip adding Authorization header for authentication endpoints
-  // Check if URL contains the auth endpoints (login or register)
-  const isAuthEndpoint = req.url.includes('/api/login') || req.url.includes('/api/register');
+  // Use precise matching to avoid false positives like '/api/user/login-history'
+  const isAuthEndpoint = req.url.endsWith('/api/login') || req.url.endsWith('/api/register');
 
   if (token && !isAuthEndpoint) {
     req = req.clone({
