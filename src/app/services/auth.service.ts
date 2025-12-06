@@ -68,25 +68,16 @@ export class AuthService {
   logout(): void {
     // Prevent multiple simultaneous logout calls
     if (this.isLoggingOut) {
-      console.log('Logout already in progress, skipping');
       return;
     }
     
     this.isLoggingOut = true;
-    console.log('Logout called - clearing authentication state');
     this.removeToken();
     this.removeUser();
     this.currentUserSignal.set(null);
-    console.log('State after logout:', {
-      token: this.getToken(),
-      user: this.currentUser(),
-      isAuthenticated: this.isAuthenticated()
-    });
     this.router.navigate(['/login']).then(() => {
       // Reset the flag after navigation completes
-      setTimeout(() => {
-        this.isLoggingOut = false;
-      }, 100);
+      this.isLoggingOut = false;
     });
   }
 
