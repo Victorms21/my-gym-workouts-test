@@ -45,8 +45,9 @@ describe('AuthService', () => {
   it('should login successfully', () => {
     const credentials: LoginRequest = { email: 'test@test.com', password: 'password123' };
     const mockResponse: AuthResponse = {
-      user: { id: '1', email: 'test@test.com', name: 'Test User' },
-      token: 'mock-jwt-token'
+      data: { id: 1, email: 'test@test.com', name: 'Test User' },
+      access_token: 'mock-jwt-token',
+      token_type: 'Bearer'
     };
 
     service.login(credentials).subscribe(response => {
@@ -68,8 +69,9 @@ describe('AuthService', () => {
       password: 'password123'
     };
     const mockResponse: AuthResponse = {
-      user: { id: '2', email: 'newuser@test.com', name: 'New User' },
-      token: 'new-jwt-token'
+      data: { id: 2, email: 'newuser@test.com', name: 'New User' },
+      access_token: 'new-jwt-token',
+      token_type: 'Bearer'
     };
 
     service.register(registerData).subscribe(response => {
@@ -85,7 +87,7 @@ describe('AuthService', () => {
   });
 
   it('should get current user', () => {
-    const mockUser = { id: '1', email: 'test@test.com', name: 'Test User' };
+    const mockUser = { id: 1, email: 'test@test.com', name: 'Test User' };
 
     service.getCurrentUser().subscribe(user => {
       expect(user).toEqual(mockUser);
@@ -99,7 +101,7 @@ describe('AuthService', () => {
 
   it('should logout and clear data', () => {
     localStorage.setItem('auth_token', 'test-token');
-    localStorage.setItem('auth_user', JSON.stringify({ id: '1', email: 'test@test.com', name: 'Test' }));
+    localStorage.setItem('auth_user', JSON.stringify({ id: 1, email: 'test@test.com', name: 'Test' }));
 
     service.logout();
 
