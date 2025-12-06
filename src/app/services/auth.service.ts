@@ -14,6 +14,7 @@ export class AuthService {
   private readonly USER_KEY = 'auth_user';
 
   private currentUserSignal = signal<User | null>(this.getStoredUser());
+  private isLoggingOut = false;
 
   readonly currentUser = this.currentUserSignal.asReadonly();
   readonly isAuthenticated = computed(() => !!this.currentUserSignal() && !!this.getToken());
@@ -65,10 +66,19 @@ export class AuthService {
   }
 
   logout(): void {
+    // Prevent multiple simultaneous logout calls
+    if (this.isLoggingOut) {
+      return;
+    }
+    
+    this.isLoggingOut = true;
     this.removeToken();
     this.removeUser();
     this.currentUserSignal.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).finally(() => {
+      // Always reset the flag, even if navigation fails
+      this.isLoggingOut = false;
+    });
   }
 
   getToken(): string | null {
